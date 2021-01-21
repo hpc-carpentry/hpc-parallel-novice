@@ -3,13 +3,13 @@
 #------------------------------------------------------------
 
 # Which carpentry is this ("swc" or "dc")?
-carpentry: "swc"
+carpentry: "hpc"
 
 # Overall title for pages.
-title: "HPC novice"
+title: "HPC Parallelisation For Novices"
 
 # Contact email address.
-email: lessons@software-carpentry.org
+email: p.steinbach@hzdr.de
 
 #------------------------------------------------------------
 # Generic settings (should not need to change).
@@ -31,6 +31,7 @@ swc_pages: "https://swcarpentry.github.io"
 template_repo: "https://github.com/swcarpentry/styles"
 example_repo: "https://github.com/swcarpentry/lesson-example"
 example_site: "https://swcarpentry.github.com/lesson-example"
+
 workshop_repo: "https://github.com/swcarpentry/workshop-template"
 workshop_site: "https://swcarpentry.github.io/workshop-template"
 training_site: "https://swcarpentry.github.io/instructor-training"
