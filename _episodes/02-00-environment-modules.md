@@ -1,5 +1,5 @@
 ---
-title: "Changing the Environment"
+title: "Recap: Changing the Environment"
 teaching: 20
 exercises: 10
 questions:
