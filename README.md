@@ -10,9 +10,19 @@ The material can be viewed [here](https://psteinb.github.io/hpc-parallel-novice)
 
 The material targets future users of a HPC infrastructure of any discipline. The learners are expected to have an introductory level of programming skills. Learners are expected to know how to submit a batch job on a HPC cluster. Further, knowledge on how to write functions in python are required. Basic `numpy` array commands are beneficial but not required to follow the course.
 
+This boils down to the fact, that learners should have completed:
+
+- [swcarpentry/shell-novice](https://swcarpentry.github.io/shell-novice/)
+- [swcarpentry/python-novice-inflammation](https://swcarpentry.github.io/python-novice-inflammation/)
+- [hpccarpentry/hpc-intro](https://carpentries-incubator.github.io/hpc-intro/) or [hpc-in-a-day's](https://psteinb.github.io/hpc-parallel-novice/) first 4 lessons
+
 ## Scheduler
 
 This material tries to be scheduler agnostic. Currently, it supports LSF and SLURM. The job scheduler type can be set with the `workshop_scheduler` variable in [_config.yaml](./_config.yaml).
+
+## How to Teach 
+
+More information on how to teach this material can be found in the instructor notes under the `Extras` tab.
 
 # How to build
 
