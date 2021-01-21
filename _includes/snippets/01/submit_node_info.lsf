@@ -1,0 +1,8 @@
+$ cat node_info.sh
+#!/bin/bash
+
+FILENAME=/tmp/`hostname`_info.log
+
+cat /proc/cpuinfo  > ${FILENAME}
+
+$ bsub -W 1 < node_info.sh

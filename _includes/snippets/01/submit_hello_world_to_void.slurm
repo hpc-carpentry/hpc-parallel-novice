@@ -1,0 +1,1 @@
+$ srun echo Hello World
