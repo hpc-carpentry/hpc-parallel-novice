@@ -4,7 +4,7 @@ Novice introduction to parallelisation with high performance computing. This mat
 
 ## Material
 
-The material can be viewed [here](https://psteinb.github.io/hpc-parallel-novice)!
+The material can be viewed [here](https://hpc-carpentry.github.io/hpc-parallel-novice/)!
 
 ## Audience
 
