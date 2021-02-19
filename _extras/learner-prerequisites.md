@@ -117,4 +117,20 @@ A compute task on your laptop takes 2 hours to complete. You fed 150 input files
 3. the university data center
 4. purchasing cloud server infrastructure
 
+### Jobs, Jobs, Jobs
 
+A compute task on your laptop takes more than 2 hours to complete - you kill the task and reconsider your approach. You feed 50 input files to a single application that needs to run once for every input file. You conclude that this is a good task for your cluster. You sit down and submit several jobs to the cluster. Each job is limited to 10 minutes of the walltime. Each job defines an output file of the structure `done_${FILENAME}.log` where `${FILENAME}` refers to the location of your input file. 
+
+1. I can do that. Give me a shell on a cluster and I'll show you.
+2. I'd need to look up the syntax in a cheatsheet or some old code and I'm good to do this.
+3. I am unclear about this, I'd have to consult a colleague or a search engine to do this.
+4. I am not sure what to do.
+
+### Multi-Parallel on one machine
+
+One of the goto tools of your domain has just been released on github with a version that can employ multiple cores on a single computer. You want to put this software to use on your cluster. For this, you submit a job that requires 32 cores on one machine and 64 GB of RAM if available. 
+
+1. I can do that. Give me a shell on a cluster and I'll show you.
+2. I'd need to look up the syntax in a cheatsheet or some old code and I'm good to do this.
+3. I am unclear about this, I'd have to consult a colleague or a search engine to do this.
+4. I am not sure what to do.
