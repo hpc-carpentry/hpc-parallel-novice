@@ -66,6 +66,7 @@ to perform it's duty.
 3. I am unclear about this, I'd have to consult a colleague or a search engine to do this.
 4. I am not sure what to do.
 
+
 ## Python
 
 ### Lists 1
@@ -77,10 +78,27 @@ You are provided with a python list of integer values. The list has length 1024 
 3. I am unclear about this, I'd have to consult a colleague or a search engine to do this.
 4. I am not sure what to do.
 
-
 ### Lists 2
 
 You are provided a list of 512 random float values. These values range between 0 and 100. You would like to remove any entry in this list that is larger than 90 or smaller than 10. 
+
+1. I can do that. Give me something that understands python and I'll show you.
+2. I'd need to look up the syntax in a cheatsheet or some old code and I'm good to do this.
+3. I am unclear about this, I'd have to consult a colleague or a search engine to do this.
+4. I am not sure what to do.
+
+### Python Setup 1
+
+Your operating system does not have python installed. You would like to install python as well as mpi4py library.
+
+1. I can do that. Give me something that understands python and I'll show you.
+2. I'd need to look up the syntax in a cheatsheet or some old code and I'm good to do this.
+3. I am unclear about this, I'd have to consult a colleague or a search engine to do this.
+4. I am not sure what to do.
+
+### Python Setup 2
+
+Your operating system ships with python 2.5 which is required for some of its functionalities. Your job requires python 3.8 which you have installed already. Now you also need to install Numpy. How would you install Numpy for python 3.8 in a way so that it does not affect the system's python 2.5?
 
 1. I can do that. Give me something that understands python and I'll show you.
 2. I'd need to look up the syntax in a cheatsheet or some old code and I'm good to do this.
