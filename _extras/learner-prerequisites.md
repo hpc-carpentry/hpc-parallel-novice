@@ -34,7 +34,7 @@ files. How do you do this?
 ### Moving around
 
 You are on `/bigdata/users/wolfman/projects/study` and want to jump over to 
-`/bigdata/projects/experiments/at-moonlight`.
+`/bigdata/projects/experiments/at-moonlight` on the command line.
 
 1. I can do that. Give me a shell and I'll show you.
 2. I'd need to look up the syntax in a cheatsheet or some old code and I'm good to do this.
@@ -44,7 +44,7 @@ You are on `/bigdata/users/wolfman/projects/study` and want to jump over to
 ### Collaborator Candy
 
 A collaborator provides you an implementation of a state-of-the-art simulation 
-that you need to compare your own predictions to. He tells you: "You can use it 
+that you need to compare your own predictions to. He tells you: "You can use it on the command line
 right away. Unpack the file I sent you and use the `sim` executable in the 
 `bin/` folder from it. The rest is explained in the output of the `--help` flag." 
 You want to execute `sim` on your cluster. How do you set up your shell for this?
@@ -56,7 +56,7 @@ You want to execute `sim` on your cluster. How do you set up your shell for this
 
 ### Automating All The Things
 
-You observe yourself copy and pasting the same sequence of 5 commands for more 
+You observe yourself copy and pasting the same sequence of 5 commands on the command line for more 
 than three times during a day. You alert yourself that you should write a script 
 for this now. The script requires two input arguments, i.e. two single file locations, 
 to perform it's duty.
@@ -65,6 +65,7 @@ to perform it's duty.
 2. I'd need to look up the syntax in a cheatsheet or some old code and I'm good to do this.
 3. I am unclear about this, I'd have to consult a colleague or a search engine to do this.
 4. I am not sure what to do.
+
 
 ## Python
 
@@ -77,10 +78,27 @@ You are provided with a python list of integer values. The list has length 1024 
 3. I am unclear about this, I'd have to consult a colleague or a search engine to do this.
 4. I am not sure what to do.
 
-
 ### Lists 2
 
 You are provided a list of 512 random float values. These values range between 0 and 100. You would like to remove any entry in this list that is larger than 90 or smaller than 10. 
+
+1. I can do that. Give me something that understands python and I'll show you.
+2. I'd need to look up the syntax in a cheatsheet or some old code and I'm good to do this.
+3. I am unclear about this, I'd have to consult a colleague or a search engine to do this.
+4. I am not sure what to do.
+
+### Python Setup 1
+
+Your operating system does not have python installed. You would like to install python as well as mpi4py library.
+
+1. I can do that. Give me something that understands python and I'll show you.
+2. I'd need to look up the syntax in a cheatsheet or some old code and I'm good to do this.
+3. I am unclear about this, I'd have to consult a colleague or a search engine to do this.
+4. I am not sure what to do.
+
+### Python Setup 2
+
+Your operating system ships with python 2.5 which is required for some of its functionalities. Your job requires python 3.8 which you have installed already. Now you also need to install Numpy. How would you install Numpy for python 3.8 in a way so that it does not affect the system's python 2.5?
 
 1. I can do that. Give me something that understands python and I'll show you.
 2. I'd need to look up the syntax in a cheatsheet or some old code and I'm good to do this.
