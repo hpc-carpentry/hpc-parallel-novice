@@ -3,13 +3,13 @@
 #------------------------------------------------------------
 
 # Which carpentry is this ("swc" or "dc")?
-carpentry: "hpc"
+carpentry: "incubator"
 
 # Overall title for pages.
 title: "HPC Parallelisation For Novices"
 
 # Contact email address.
-email: p.steinbach@hzdr.de
+email: "p.steinbach@hzdr.de"
 
 #------------------------------------------------------------
 # Generic settings (should not need to change).
@@ -18,9 +18,11 @@ email: p.steinbach@hzdr.de
 # What kind of thing is this ("workshop" or "lesson")?
 kind: "lesson"
 
-# Magic to make URLs resolve both locally and on GitHub.
-# See https://help.github.com/articles/repository-metadata-on-github-pages/.
+# Magic to make URLs resolve both locally and on GitHub. Please don't change.
 repository: <USERNAME>/<PROJECT>
+
+# Invoke the Carpentries theme rather than copying into our repository.
+remote_theme: carpentries/carpentries-theme
 
 # Sites.
 amy_site: "https://amy.software-carpentry.org/workshops"
