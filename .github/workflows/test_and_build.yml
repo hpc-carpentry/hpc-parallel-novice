@@ -20,7 +20,7 @@ jobs:
         pip3 install codespell
     - name: Check spelling
       run: |
-        codespell --skip=".git,.github,assets,amino-acids.txt,bin,*.pdb,*.svg,*.xml" --quiet-level=2
+        codespell --skip=".git,.github,.vendor,assets,amino-acids.txt,bin,*.pdb,*.svg,*.xml" --quiet-level=2 -L rouge
 
   check_lesson_and_build_default:
     runs-on: ubuntu-latest

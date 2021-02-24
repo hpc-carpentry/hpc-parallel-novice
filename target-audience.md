@@ -1,3 +1,7 @@
+---
+layout: page
+---
+
 # Target Audience
 
 HPC Carpentry is targeted at graduate students, researchers, or
