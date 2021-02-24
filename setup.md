@@ -10,11 +10,11 @@ Please bring your laptop to the course. Your laptop should have a program called
 
 ### Linux
 
-Please make sure that ssh is in your PATH or to install ssh with your distribution's package manager (like xterm, terminal, konsole, etc. available as well).
+Please make sure that ssh is in your PATH or to install ssh with your distribution's package manager (like xterm, terminal, konsole, etc. available as well).
 
-### macOS / OSX
+### macOS / OS X
 
-`ssh` is typically preinstalled, however be sure to have a terminal program (like e.g. [iTerm](https://www.iterm2.com/) available as well).
+`ssh` is typically preinstalled, however be sure to have a terminal program (like e.g. [`iTerm`](https://www.iterm2.com/) available as well).
 
 ### Windows
 

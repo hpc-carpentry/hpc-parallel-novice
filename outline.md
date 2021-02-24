@@ -1,3 +1,7 @@
+---
+layout: page
+---
+
 # Learning Outline 
 
 ## Paradigms of Parallel Computing

@@ -1,4 +1,8 @@
-_site/
-.sass-cache/
-.jekyll-cache/
+_site
+*/__pycache__
+.bundle
+.jekyll-cache
 .jekyll-metadata
+.sass-cache
+.vendor
+Gemfile.lock

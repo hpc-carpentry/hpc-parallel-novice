@@ -4,13 +4,13 @@ teaching: 30
 exercises: 15
 questions:
   - "What were the key changes when using the multiprocessing library?"
-  - "How could this be implemented with dask?"
+  - "How could this be implemented with `dask`?"
   - "How does a conversion using `dask` high level API compare?"
 objectives:
-  - "Use a high level description of your algroithm."
+  - "Use a high level description of your algorithm."
   - "Measure the runtime of the dask implementation."
 keypoints:
-  - "The implementation using multiprocessing used python stdlib components. (very portable)"
+  - "The implementation using multiprocessing used python standard library components (very portable)."
   - "The dask library offers parallelisation using constructs that are very numpy like."
   - "To port to dask only the import statements and the container construction needs to be changed."
   - "The advantage of these changes lie in the capability to scale the job to larger machines (test locally, scale globally)."
@@ -60,9 +60,9 @@ This [implementation]({{page.root}}/code/02_parallel_jobs/dask_numpi.py) can now
 
 In this example, the containers for the random numbers have become smart. This is only visible by good measure of the `chunks=-1` argument to the `da.random.uniform` function. A flat container used to just hold numbers in memory wouldn't have to be responsible for the chunking of the data. But dask offers us a container that does so.
 
-Behind the courtains, the dask framework connects containers (`da.array` here) with functions (`operator*`, `operator+`, `da.sqrt`, `da.where`). The framework then infers which functions can act on which data independently. From this, the dask library can complete the program to any degree of parallelism that is needed. 
+Behind the curtains, the dask framework connects containers (`da.array` here) with functions (`operator*`, `operator+`, `da.sqrt`, `da.where`). The framework then infers which functions can act on which data independently. From this, the dask library can complete the program to any degree of parallelism that is needed. 
 
-All this automation comes at a price. The dask implementation is about 2x slower than the pure `multiprocessing` one. But there must be something, Lola has gained. The answer will become evident, when we dive into more details of the `dask` eco system as dask is HPC-ready.
+All this automation comes at a price. The dask implementation is about 2x slower than the pure `multiprocessing` one. But there must be something, Lola has gained. The answer will become evident, when we dive into more details of the `dask` ecosystem as dask is HPC-ready.
 
 ~~~
 $ pip3 install --user distributed bokeh
@@ -76,7 +76,7 @@ When consulting the `dask.distributed` [documentation](https://distributed.dask.
 ~~~
 {: .python}
 
-Following the adivce from the [`dask` documentation](https://distributed.dask.org/en/latest/quickstart.html#setup-dask-distributed-the-hard-way), she has to do some manual work first, before she can launch the dask processes.
+Following the advice from the [`dask` documentation](https://distributed.dask.org/en/latest/quickstart.html#setup-dask-distributed-the-hard-way), she has to do some manual work first, before she can launch the dask processes.
 
 First, she needs to start the `dask-scheduler`.
 
@@ -175,4 +175,4 @@ $ python3 distributed.dask_numpi.py
 ~~~
 {: .bash}
 
-Lola smiles while looking at the dashboard. This was after all very easy to setup. She has now reached a precision boundary that no other emplyee has reach for estimating pi.
+Lola smiles while looking at the dashboard. This was after all very easy to setup. She has now reached a precision boundary that no other employee has reach for estimating pi.

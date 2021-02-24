@@ -6,7 +6,7 @@ import glob
 import re
 
 def load_text():
-    """ searchs for the path seen by python (aka sys.path) which contains os.py and reads all .py files in this directory into a large string """
+    """ Searches for the path seen by python (aka sys.path) which contains os.py and reads all .py files in this directory into a large string """
 
     path_of_ospy = ""
     text = []

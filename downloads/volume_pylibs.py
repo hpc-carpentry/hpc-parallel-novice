@@ -6,7 +6,7 @@ import glob
 import re
 
 def pylibs_files():
-    """ searchs for the path seen by python (aka sys.path) which contains os.py and return all paths to .py therein as a list"""
+    """ Searches for the path seen by python (aka sys.path) which contains os.py and return all paths to .py therein as a list"""
 
     path_of_ospy = ""
     text = []
