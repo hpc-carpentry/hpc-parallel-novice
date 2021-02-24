@@ -25,7 +25,7 @@ keypoints:
 Having the profiling data, our estimate of pi is a valuable resource.
 
 ~~~~~
-$ kernprof-3 -l ./serial_numpi_annotated.py 50000000
+$ kernprof -l ./serial_numpi_annotated.py 50000000
 [serial version] required memory 572.205 MB
 [serial version] pi is 3.141728 from 50000000 samples
 Wrote profile results to serial_numpi_annotated.py.lprof
@@ -54,7 +54,7 @@ Line #      Hits         Time  Per Hit   % Time  Line Contents
 
 The key points were, that `inside_circle` consumed the majority of the runtime (99%). Even more so, the generation of random numbers consumed the most parts of the runtime (73%). 
 
-More over, the generation of random numbers in x and in y is independent (two seperate lines of code). So there is another way to expliot data independence:
+More over, the generation of random numbers in x and in y is independent (two separate lines of code). So there is another way to exploit data independence:
 
 ![Illustration of drawing random number pairs `x` and `y` and their dependency with respect to the dimension]({{ page.root }}/tikz/data_coords_parallel_estimate_pi.svg)
 
@@ -96,7 +96,7 @@ This behavior is often referred to as **data parallelism**.
 > 1. Manually copying a book and producing a clone 
 > 2. Clearing the table after dinner
 > 3. Rinsing the dishes with one sink
-> 4. A family getting dressed to leave the appartment for a birthday party
+> 4. A family getting dressed to leave the apartment for a birthday party
 >
 > Think about what the inputs are to the task at hand. Can individual items of the inputs be processed independent of each other?
 > 
@@ -177,7 +177,7 @@ This behavior is often referred to as **data parallelism**.
 > {: .solution}
 {: .challenge}
 
-Lola now wonders how to proceed. There are multiple options at her disposal (see the 2 strategies above). But given her limited time budget, she thinks that trying them all out is tedious. She discusses this with her office mate over lunch. Her colleaque mentions that a similar type of consideration was first discussed by Gene Amdahl in 1967 and goes by the name of [Amdahl's law](https://en.wikipedia.org/wiki/Amdahl%27s_law). This law provides a simple way of calculating how fast a program can get when parallelized for a fixed problem size. By profiling her code, Lola has all the ingredients to make this calculation. So they both embark on this exercise.
+Lola now wonders how to proceed. There are multiple options at her disposal (see the 2 strategies above). But given her limited time budget, she thinks that trying them all out is tedious. She discusses this with her office mate over lunch. Her colleague mentions that a similar type of consideration was first discussed by Gene Amdahl in 1967 and goes by the name of [Amdahl's law](https://en.wikipedia.org/wiki/Amdahl%27s_law). This law provides a simple way of calculating how fast a program can get when parallelized for a fixed problem size. By profiling her code, Lola has all the ingredients to make this calculation. So they both embark on this exercise.
 
 The performance improvement of a program, given an original implementation and an improved one is referred to as __speed-up S__. Given a program, we can measure the runtime of the code that can benefit later on from use of more resources (i.e. parallel computations as in our case). We call this quantity __portion `p` to parallelize__ (or short parallel portion). 
 
@@ -268,7 +268,7 @@ So the bottom line(s) of Amdahl's law are:
 
 > ## Surprise! More limits.
 > 
-> Until here `s` was of dubious nature. It was a proprerty of the parallel implementation of our code. In practise, this number is not only limited algorithmically, but also by the hardware your code is running on.
+> Until here `s` was of dubious nature. It was a property of the parallel implementation of our code. In practise, this number is not only limited algorithmically, but also by the hardware your code is running on.
 >
 > Modern computers consist of 3 major parts most of the time:
 > - a core processing unit (CPU)
@@ -385,11 +385,11 @@ That means, our parallel implementation does already a good job, but only achiev
 > 1. Compressing the files in a directory
 > 2. Converting the currency in all rows of a large spreadsheet (10 million rows)
 > 3. Writing an e-mail in an online editor
-> 4. Watching a video on youtube/vimeo/etc. or in a video player application
+> 4. Watching a video on YouTube/vimeo/etc. or in a video player application
 >
 > > ## Solution
-> > 1. parallel, each file can be compressed seperately
-> > 2. parallel, each row can be converted seperately
+> > 1. parallel, each file can be compressed separately
+> > 2. parallel, each row can be converted separately
 > > 3. not parallel, we only have one writer (you)
 > > 4. not parallel, you only have one consumer (you)
 > {: .solution}

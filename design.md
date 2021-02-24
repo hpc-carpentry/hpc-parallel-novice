@@ -30,7 +30,7 @@ subtitle: Lesson Design
 
 ### Goals
 
-1.  Get learners to the stage decribed in the "Software" section of
+1.  Get learners to the stage described in the "Software" section of
     "[Good Enough Practices in Scientific Computing][good-enough]".
     *   Goals
         1.  Make it easy for people (including your future self) to understand and (re)use your code
@@ -47,9 +47,9 @@ subtitle: Lesson Design
         8.  Use a simple example or test data set to run to tell if it's working at all and whether it gives a known correct output for a simple known input
         9.  Submit code to a reputable DOI-issuing repository upon submission of paper, just like data
             *   This rule is *not* covered in this lesson
-2.  Enable them to make sense of other onlines tutorials and resources
+2.  Enable them to make sense of other online tutorials and resources
 
-### Summative Assessment
+### Cumulative Assessment
 
 *   Midpoint: plot bar chart showing average GDP per continent
 *   Final: debug and extend a short multi-function program to handle data laid out differently
