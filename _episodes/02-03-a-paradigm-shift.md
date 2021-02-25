@@ -23,7 +23,7 @@ Lola observes the code she has just written. She asks her room mate if she could
 ~~~
 {% include code/02_parallel_jobs/parallel_numpi.py %}
 ~~~
-{: .python}
+{: .language-python}
 
 Lola's office mate observes, that:
 
@@ -47,14 +47,14 @@ Another day, Lola discovers a library named `dask` (see more details [here](http
 ~~~
 $ pip3 install --user dask
 ~~~
-{: .bash}
+{: .language-bash}
 
 She now sets out to study the documentation of `dask` and comes up with the following code:
 
 ~~~
 {% include code/02_parallel_jobs/dask_numpi.py %}
 ~~~
-{: .python}
+{: .language-python}
 
 This [implementation]({{page.root}}/code/02_parallel_jobs/dask_numpi.py) can now be put to work. At this point, a paradigm shift has been introduced silently. Lola's office mate makes her aware of this. It is a subtle change compared to using the `multiprocessing` library, but it is there. 
 
@@ -67,14 +67,14 @@ All this automation comes at a price. The dask implementation is about 2x slower
 ~~~
 $ pip3 install --user distributed bokeh
 ~~~
-{: .bash}
+{: .language-bash}
 
 When consulting the `dask.distributed` [documentation](https://distributed.dask.org/en/latest/index.html), Lola recognizes that she needs to adopt her code to work with `dask.distributed`.
 
 ~~~
 {% include code/02_parallel_jobs/distributed.dask_numpi.py %}
 ~~~
-{: .python}
+{: .language-python}
 
 Following the advice from the [`dask` documentation](https://distributed.dask.org/en/latest/quickstart.html#setup-dask-distributed-the-hard-way), she has to do some manual work first, before she can launch the dask processes.
 
@@ -83,7 +83,7 @@ First, she needs to start the `dask-scheduler`.
 ~~~
 $ dask-scheduler > scheduler.log 2>&1 &
 ~~~
-{: .bash}
+{: .language-bash}
 
 ~~~
 distributed.scheduler - INFO - -----------------------------------------------
@@ -100,14 +100,14 @@ Then, she starts one workers for testing:
 ~~~
 $ dask-worker 192.168.178.25:8786 > worker.log 2>&1 &
 ~~~
-{: .bash}
+{: .language-bash}
 
 Lola notices how she has to connect the 2 processes by an IP address `192.168.178.25:8786`. After doing all of this, she runs [her script]({{page.root}}/code/02_parallel_jobs/distributed.dask_numpi.py) again:
 
 ~~~
 $ python3 distributed.dask_numpi.py
 ~~~
-{: .bash}
+{: .language-bash}
 
 Something has changed. She receives the result much quicker now. Is that reproducible? Lola measures and observes that the runtime of `dask.distributed` is very close to the runtime of the `multiprocessing` implementation.
 
@@ -120,7 +120,7 @@ In an cluster environment, this is now a powerful feature. Scaling the applicati
 ~~~
 $ dask-scheduler > scheduler.log 2>&1 &
 ~~~
-{: .bash}
+{: .language-bash}
 
 Note, we are sending this process into the background immediately and route its output including all errors into `scheduler.log`. The output of this command should look like this (if not, there is a problem):
 
@@ -145,34 +145,34 @@ $ cat worker.sh
 dask-worker tcp://1.1.1.42:8786
 $ sbatch -o worker1.log  worker.sh
 ~~~
-{: .bash}
+{: .language-bash}
 
 Now, we have to update the address of the scheduler inside our dask python script:
 
 ~~~
 client = Client("tcp://1.1.1.42:8786")
 ~~~
-{: .python}
+{: .language-python}
 
 As Lola observes, all parts of this dask system are connected by a single point, i.e. the IP address of the `dask-scheduler`. Lola can now run her dask scripts from the node where the `dask-scheduler` was started.
 
 ~~~
 $ python3 distributed.dask_numpi.py
 ~~~
-{: .bash}
+{: .language-bash}
 
 She will notice that the dashboard at `1.1.1.42:8787` is now filled with moving boxes. Her application runs. But, how about adding another node?
 
 ~~~
 $ sbatch -o worker2.log  worker.sh
 ~~~
-{: .bash}
+{: .language-bash}
 
 She is curious if the 2 workers can be used by her code.
 
 ~~~
 $ python3 distributed.dask_numpi.py
 ~~~
-{: .bash}
+{: .language-bash}
 
 Lola smiles while looking at the dashboard. This was after all very easy to setup. She has now reached a precision boundary that no other employee has reach for estimating pi.
