@@ -51,6 +51,7 @@ Line #      Hits         Time  Per Hit   % Time  Line Contents
     17                                           
     18         1            2      2.0      0.0      return count
 ~~~~~
+{: .output }
 
 The key points were, that `inside_circle` consumed the majority of the runtime (99%). Even more so, the generation of random numbers consumed the most parts of the runtime (73%). 
 
@@ -69,6 +70,7 @@ More over, the generation of random numbers in x and in y is independent (two se
 > 
 > c = a + b
 > ~~~~~
+> {: .language-python }
 > 
 > First of, `np.random.uniform(size=10)` creates a collection of 10 random numbers. Cross check this by printing it to the terminal. 
 >
@@ -78,6 +80,7 @@ More over, the generation of random numbers in x and in y is independent (two se
 > for i in range(len(a)):
 >   c[i] = a[i] + b[i]
 > ~~~~~
+> {: .language-python }
 >
 > In technical terms, numpy is a vectorizing library. It tries to compress for-loop-lie operations into singular statements if each iteration of for-loop-operation is independent of the previous and/or next.
 {: .callout}
@@ -118,6 +121,7 @@ This behavior is often referred to as **data parallelism**.
 > for i in range(len(my_data)):
 >   my_data[i] = pi*my_data[i]
 > ~~~~~~
+> {: .language-python }
 >
 > > ## Solution
 > > Yes, each iteration at a given value for `i` is independent of any other value. We multiply the value that is currently stored at `my_data[i]` by `pi` and store the result back into `my_data[i]`.
@@ -129,6 +133,7 @@ This behavior is often referred to as **data parallelism**.
 > > 
 > > my_data = pi*my_data
 > > ~~~~~
+> > {: .language-python }
 > {: .solution}
 {: .challenge}
 
@@ -145,6 +150,7 @@ This behavior is often referred to as **data parallelism**.
 >   else:
 >       my_data[i] = 3*my_data[i]
 > ~~~~~~
+> {: .language-python }
 >
 > > ## Solution
 > > Yes, each iteration at a given value for `i` is independent of any other value even though we have an if-statement here. We set every even indexed value in `my_data` to `42`. For any other value in `my_data`, we multiply the value that is currently stored by `3` and store the result back into `my_data[i]`.
@@ -157,6 +163,7 @@ This behavior is often referred to as **data parallelism**.
 > > my_data[np.where(my_data % 2 == 0)] = 42
 > > my_data[np.where(my_data % 2 != 0)] = 3*my_data[np.where(my_data % 2 != 0)]
 > > ~~~~~
+> > {: .language-python }
 > {: .solution}
 {: .challenge}
 
@@ -171,6 +178,7 @@ This behavior is often referred to as **data parallelism**.
 > for i in range(1,len(my_data)):
 >   my_data[i] = 42*my_data[i-1]
 > ~~~~~~
+> {: .language-python }
 > 
 > > ## Solution
 > > No, iteration `i` depends on the iteration before it, i.e. on iteration `i-1`. This is hard if not impossible to parallelize.
@@ -190,6 +198,7 @@ Given all these ingredients, the theoretical speed-up of the whole program is gi
 S = ---------------
     (1 - p) + (p/s)
 ~~~~~
+{: .output }
 
 > ## Independent Coordinates
 > 
@@ -204,6 +213,7 @@ S = ---------------
 > S = -------------------  = --------- = ------- = 1.575
 >     1 - 0.73 + (0.73/2)    1 - 0.365    0.635
 > ~~~~~
+> {: .output }
 > 
 > S for practical matters is at this point just a number. But this can bring us in a position, where we can rate different approaches for their viability to parallelize. 
 {: .callout}
@@ -230,6 +240,7 @@ S = ---------------
 >    
 >    return count 
 > ~~~~~
+> {: .language-python }
 > 
 > For the sake of the example, we assume that the line profile looks identical to the original implementation above. Compute the theoretical speed-up S!
 > Which implementation should Lola choose now? 
@@ -240,6 +251,7 @@ S = ---------------
 > > S = -------------------  =  -------- = 2.21
 > >     1 - 0.73 + (0.73/4)      0.4525
 > > ~~~~~
+> > {: .output }
 > {: .solution}
 {: .challenge}
 
@@ -310,7 +322,7 @@ def estimate_pi(n_samples,n_cores):
     return (4.0 * sum(counts) / total_count)
 
 ~~~
-{: .python}
+{: .language-python}
 
 We are using the `multiprocessing` module that comes with the python standard library. The first step is to create a list of numbers that contain the partitions. For this, `n_samples` is divided by the number of cores available on the machine, where this code is executed. The ratio has to be converted to an integer to ensure, that each partition is compatible to a length of an array. The construct used next is a process `Pool`. Due to technical details on how the python interpreter is built, we do not use a Pool of threads here. In other languages than python, `threads` are the more common idiom to represent independent strings of execution that share the same memory than the process they are created in. The process `Pool` creates `n_cores` processes and keeps them active as long as the `Pool` is active. Then `pool.map` will call `inside_circle` using an item of `partitions` as the argument. In other words, for each item in `partitions`, the `inside_circle` function is called once using the respective item as input argument. The result of these invocations of `inside_circle` are stored within the `counts` variable (which will have the same length as `partitions` eventually).
 
@@ -321,7 +333,7 @@ The last step required before calculating pi is to collect the individual result
 ~~~
 $ python3 ./parallel_numpi.py 1000000000
 ~~~
-{: .bash}
+{: .language-bash}
 
 ~~~
 [parallel version] required memory 11444.092 MB
@@ -334,7 +346,7 @@ The good news is, the parallel implementation is correct. It estimates Pi to equ
 ~~~
 $ time python3 ./serial_numpi.py 200000000
 ~~~
-{: .bash}
+{: .language-bash}
 
 ~~~
 [serial version] required memory 2288.818 MB
@@ -349,7 +361,7 @@ sys		0m2.101s
 ~~~
 $ time python3 ./parallel_numpi.py 2000000000
 ~~~
-{: .bash}
+{: .language-bash}
 
 ~~~
 [parallel version] required memory 2288.818 MB
@@ -402,7 +414,7 @@ That means, our parallel implementation does already a good job, but only achiev
 > ~~~~~
 > $ python3 count_lines.py *py
 > ~~~~~
-> {: .bash}
+> {: .language-bash}
 >
 > It should print something like this:
 > 
@@ -428,7 +440,7 @@ That means, our parallel implementation does already a good job, but only achiev
 > $ python3 count_pylibs.py
 > 4231827 characters and 418812 words found in standard python libs
 > ~~~~~
-> {: .bash}
+> {: .language-bash}
 > 
 > Examine the application if you can find data parallelism. If so parallelize it! Compare the timings!
 {: .challenge}
