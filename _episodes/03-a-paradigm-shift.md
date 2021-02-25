@@ -113,7 +113,7 @@ Something has changed. She receives the result much quicker now. Is that reprodu
 
 By chance, she talks to her office mate about this. They discover that there is more waiting for them. She opens the URL at `192.168.178.25:8787` in her browser. Lola is sees an interesting dashboard:
 
-![](fig/dask-dashboard_1024px.png)
+![]({{page.root}}/fig/dask-dashboard_1024px.png)
 
 In an cluster environment, this is now a powerful feature. Scaling the application has just become manageable. So let's get real and scale across multiple nodes on the cluster. For this, we start the central `dask-scheduler` on the login node. This is a process that only handles network traffic and hence should not (to be monitored) consume too many resources.
 
