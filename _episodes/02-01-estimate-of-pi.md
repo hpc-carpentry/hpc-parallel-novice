@@ -32,6 +32,7 @@ The algorithm goes like this:
 Pi = 4 * -------------
          total_count
 ~~~
+{: .output }
 
 Using `total_count` random number pairs in a nutshell is given in the program below:
 
@@ -58,7 +59,7 @@ def estimate_pi(total_count):
     return (4.0 * count / total_count) 
 
 ~~~
-{: .python}
+{: .language-python}
 
 For generating pseudo-random numbers, we sample the [uniform probability distribution](https://en.wikipedia.org/wiki/Uniform_distribution_(continuous)) using the default floating point interval from `0` to `1`. The `sqrt` step is not required directly, but Lola includes it here for clarity. `numpy.where` is used obtain the list of indices that correspond to radii which are equal or smaller than `1.0`. At last, this list of indices is used to filter-out the numbers in the `radii` array and obtain its length, which is the number Lola are after.
 
@@ -67,7 +68,7 @@ Lola finishes writing the pi estimation and comes up with a [small python script
 ~~~
 $ python3 ./serial_numpi.py 1000000000
 ~~~
-{: .bash}
+{: .language-bash}
 
 ~~~
 [serial version] required memory 11444.092 MB
@@ -85,7 +86,7 @@ If need be, to install the profiler, please issue the following command:
 ~~~
 $ pip3 install line_profiler
 ~~~
-{: .bash }
+{: .language-bash }
 
 When this is done and your command line offers the `kernprof-3` executable, you are ready to go on. 
 
@@ -125,7 +126,7 @@ def main():
 if __name__=='__main__':
     main()
 ~~~
-{: .python }
+{: .language-python }
 
 With this trick, we can make sure that we profile the entire application. Note, that this is a necessity when using `line_profiler`. We can now carry on, and annotate the main function.
 
@@ -135,6 +136,7 @@ With this trick, we can make sure that we profile the entire application. Note, 
 def main():
   ...
 ~~~
+{: .language-python }
 
 Let's save this to `serial_numpi_annotated.py`. After this is done, the profiler is run with a reduced input parameter that does take only about 2-3 seconds:
 
@@ -144,7 +146,7 @@ $ kernprof-3 -l ./serial_numpi_annotated.py 50000000
 [serial version] pi is 3.141728 from 50000000 samples
 Wrote profile results to serial_numpi_annotated.py.lprof
 ~~~
-{: .bash }
+{: .language-bash }
 
 You can see that the profiler just adds one line to the output, i.e. the last line. In order to view, the output we can use the `line_profile` module in python:
 
@@ -170,6 +172,7 @@ Line #      Hits         Time  Per Hit   % Time  Line Contents
     33         1           50     50.0      0.0      print("[serial version] required memory %.3f MB" % (n_samples*sizeof*3/(1024*1024)))
     34         1           23     23.0      0.0      print("[serial version] pi is %f from %i samples" % (my_pi,n_samples)
 ~~~
+{: .output }
 
 Aha, as expected the function that consumes 100% of the time is `estimate_pi`. So let's remove the annotation from `main` and move it to `estimate_pi`:
 
@@ -186,6 +189,7 @@ def main():
     n_samples = 10000
     if len(sys.argv) > 1:
 ~~~
+{: .language-python }
 
 And run the same cycle of record and report:
 
@@ -227,6 +231,7 @@ def inside_circle(total_count):
 
     return count
 ~~~
+{: .language-python }
 
 And run the profiler again:
 
@@ -257,6 +262,7 @@ Line #      Hits         Time  Per Hit   % Time  Line Contents
     17                                           
     18         1            2      2.0      0.0      return count
 ~~~
+{: .output }
 
 So generating the random numbers appears to be the bottleneck as it accounts for 37+36=73% of the total runtime time. 
 So this is a prime candidate for acceleration.
@@ -268,7 +274,7 @@ So this is a prime candidate for acceleration.
 > ~~~~~
 > $ python3 count_lines.py *py
 > ~~~~~
-> {: .bash}
+> {: .language-bash}
 >
 > It should print something like this:
 > 
@@ -324,7 +330,7 @@ So this is a prime candidate for acceleration.
 > $ python3 count_pylibs.py
 > 4231827 characters and 418812 words found in standard python libs
 > ~~~~~
-> {: .bash}
+> {: .language-bash}
 > 
 > Find the hotspot of the application.
 > 
@@ -365,7 +371,7 @@ So this is a prime candidate for acceleration.
 > $ python3 count_pylibs.py
 > 4231827 characters and 418812 words found in standard python libs
 > ~~~~~
-> {: .bash}
+> {: .language-bash}
 > 
 > 1. Start a Stopwatch
 > 2. Find one alternative way to achieve what `count_pylibs.py` does.
