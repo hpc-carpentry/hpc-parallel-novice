@@ -20,7 +20,7 @@ Lola comes to work the next day and finds that someone has tempered with her fil
 ~~~
 $ ls
 ~~~
-{: .bash}
+{: .language-bash}
 
 ~~~
 pi_estimate_01.data  pi_estimate_04.data  pi_estimate_07.data  pi_estimate_10.data  pi_estimate_13.data  pi_estimate_16.data
@@ -46,7 +46,7 @@ if __name__=='__main__':
     print(count)
 
 ~~~
-{: .python}
+{: .language-python}
 
 She launches the application and waits for quite a while until the she receives an answer (1 minute in this case). She thinks that this is strange. Looking through a some lines of text and checking if a line starts with `3.1` doesn't sound complicated, so why is it taking so long. She expected to get an answer back instantly. Given that she has 16 of these files, if she wants to look through all of them, this means that she has to wait at least 16 minutes for the answer to come along.
 
@@ -65,14 +65,14 @@ if __name__=='__main__':
             print(line)
             
 ~~~
-{: .python}
+{: .language-python}
 
 She tests her python program on a single input file. As she knows how long it'll take approximately, she can provide a good estimate of the run time of the job. If the cluster is busy, that allows the scheduler to start her job faster.
 
 ~~~
 {% include /snippets/02/submit_filter_pi.{{ site.workshop_scheduler }} %}
 ~~~
-{: .bash}
+{: .language-bash}
 
 ~~~
 3.142096
@@ -93,7 +93,7 @@ She tests her python program on a single input file. As she knows how long it'll
 > ~~~~~
 > $ egrep "^3.1" pi_estimate_01.data
 > ~~~~~
-> {: .bash}
+> {: .language-bash}
 >
 > ~~~~~
 > 3.142096
@@ -131,7 +131,7 @@ if __name__=='__main__':
     print("pi estimates from %i estimates : %f" % (n_samples,sum(pi_estimates)/n_samples))
             
 ~~~
-{: .python}
+{: .language-python}
 
 The question is, she would love to send this averaging job after she filtered everything out. That means, the averaging depends on the filter step. This can be done with the scheduler she has as:
 
@@ -139,28 +139,28 @@ The question is, she would love to send this averaging job after she filtered ev
 ~~~
 {% include /snippets/02/map_filter_pi.{{ site.workshop_scheduler }} %}
 ~~~
-{: .bash}
+{: .language-bash}
 
 The above is called an _array job_. The same commands are executed on an array of files which share a similar file name. In this case, it is `pi_estimate_01.data, pi_estimate_02.data, pi_estimate_03.data, ...`. When the job runs on the cluster, the shell variable 
 
 ~~~
 {% include /snippets/02/array_job_task_id.{{ site.workshop_scheduler }} %}
 ~~~
-{: .bash}
+{: .language-bash}
 
 is replaced by a number within the interval `[1-16]`. This way, we receive 16 output files that contain the estimates of Pi we are after. Now that this is done, all the estimates in the output files have to be averaged to provide the final result. As the produced files are only kilo-bytes in size, this can be done without the scheduler.
 
 ~~~
 $ python3 average_pi_estimates.py map_step.1.log map_step.2.log map_step.3.log map_step.4.log 
 ~~~
-{: .bash}
+{: .language-bash}
 
 It's tedious to type in all the 16 file names. Lola asks an admin for help that has been using the terminal for quite a while. He mentions the wild card character to use.
 
 ~~~
 $ python3 average_pi_estimates.py map_step.*.log
 ~~~
-{: .bash}
+{: .language-bash}
 
 ~~~
 averaged value of pi from 224 estimates : 3.141337
