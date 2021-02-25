@@ -86,7 +86,7 @@ She tests her python program on a single input file. As she knows how long it'll
 ~~~
 {: .output}
 
-> ## The `bash` can do that too
+> ## The shell can do that too
 >
 > Filtering out any lines starting with `3.1` can be done with pure bash commands as well.
 > 

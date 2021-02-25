@@ -27,7 +27,7 @@ When Lola sits down to tackle her next project, she wants to get a feeling on wh
 ~~~
 $ python3
 ~~~
-{: .bash}
+{: .language-bash}
 
 ~~~
 bash: python3: command not found
@@ -55,7 +55,7 @@ Lena demonstrates that inside the folder where `fdate` was unzipped, it can be e
 ~~~
 $ ./fdate
 ~~~
-{: .bash}
+{: .language-bash}
 
 ~~~
 -----------------------------
@@ -69,7 +69,7 @@ However, when omitting the leading `./`, the command doesn't work anymore.
 ~~~
 $ fdate
 ~~~
-{: .bash}
+{: .language-bash}
 
 ~~~
 bash: fdate: command not found...
@@ -85,7 +85,7 @@ What is likely to happen in a good library: a sign will be put up which tells a 
 ~~~
 $ echo ${PATH}
 ~~~
-{: .bash}
+{: .language-bash}
 
 which may yield something along the lines of:
 
@@ -101,7 +101,7 @@ To proceed and make `/home/lola/from_lena/fdate` available to `PATH`, Lena shows
 ~~~
 $ export PATH=${PATH}:/home/lola/from_lena/
 ~~~
-{: .bash}
+{: .language-bash}
 
 As you can see only directories (not paths to files) are added to `PATH` (similar to the example above where only signs to the fantasy corner and not to Harry Potter V are put up). 
 
@@ -112,7 +112,7 @@ As you can see only directories (not paths to files) are added to `PATH` (simila
 > ~~~~~
 > $ export PATH=/home/lola/from_lena/:${PATH}
 > ~~~~~
-> {: .bash}
+> {: .language-bash}
 > 
 > This means though that you have trust, that `/home/lola/from_lena/` does not contain applications which would shadow applications which are already accessible through `PATH`.
 >
@@ -155,7 +155,7 @@ As you can see only directories (not paths to files) are added to `PATH` (simila
 > $ cd /tmp
 > $ ls
 > ~~~~~
-> {: .bash} 
+> {: .language-bash} 
 > 
 > > ## Solution
 > > `fdate.zip` can be downloaded from [here]({{ page.root }}/code/02_parallel_jobs/fdate.zip). 
@@ -172,7 +172,7 @@ $ fdate
 $ cd /tmp
 $ fdate
 ~~~
-{: .bash}
+{: .language-bash}
 
 ~~~
 -----------------------------
@@ -191,7 +191,7 @@ To have a look, what software is available through the `module` system, a user i
 ~~~
 $ module available
 ~~~
-{: .bash}
+{: .language-bash}
 
 ~~~
 --------------------------------- /opt/modulefiles/ ---------------------------------------
@@ -206,7 +206,7 @@ The structure of each entry is usually the same `<software>/<version>`, where `s
 ~~~
 $ module load python/3.6.5
 ~~~
-{: .bash}
+{: .language-bash}
 
 ~~~
 python version 3.6.5 for x86_64 architecture loaded.
@@ -218,7 +218,7 @@ The exact content of the above differs from system to system and depends on how 
 ~~~
 $ python --version             
 ~~~
-{: .bash}
+{: .language-bash}
 
 ~~~
 Python 3.6.5
@@ -233,7 +233,7 @@ Python 3.6.5
 > ~~~
 > $ python --version             
 > ~~~
-> {: .bash}
+> {: .language-bash}
 > 
 {: .callout }
 
@@ -242,14 +242,14 @@ The real hallmark of the module system comes with the facility to switch off app
 ~~~
 $ module unload python/3.6.5
 ~~~
-{: .bash}
+{: .language-bash}
 
 When one tries again now, the above mentioned effect is gone again:
 
 ~~~
 $ python --version
 ~~~
-{: .bash}
+{: .language-bash}
 
 ~~~
 Python 2.7.15
@@ -259,12 +259,15 @@ Python 2.7.15
 
 > ## The others do it too
 > 
-> The idea of programmatically changing the environment of a running terminal is offered by many other software stacks. In the python eco system, `virtualenv` is a prime example. of such. From the [`virtualenv` docs](https://virtualenv.pypa.io/en/stable/userguide/#activate-script):
+> The idea of programmatically changing the environment of a running terminal
+> is offered by many other software stacks. In the python eco system,
+> `virtualenv` is a prime example. of such. From the [`virtualenv`
+> docs](https://virtualenv.pypa.io/en/stable/userguide/#activate-script):
 >
 > ~~~~~
 > $ source bin/activate
 > ~~~~~
-> { .bash }
+> {: .language-bash}
 > 
 > "... This will change your $PATH so its first entry is the virtualenv’s bin/ directory. (You have to use source because it changes your shell environment in-place.)"
 > 
@@ -274,7 +277,7 @@ Python 2.7.15
 > $ conda create -n our_workshop python=3.6 numpy mpi4py line_profiler
 > $ source activate our_workshop
 > ~~~~~
-> { .bash }
+> {: .language-bash}
 >
 > The last line above changes the environment of the current shell, so that `python=3.6 numpy mpi4py line_profiler` are available.
 {: .callout }

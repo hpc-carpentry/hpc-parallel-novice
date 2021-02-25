@@ -86,7 +86,7 @@ If need be, to install the profiler, please issue the following command:
 ~~~
 $ pip3 install line_profiler
 ~~~
-{: .language-bash }
+{: .language-bash}
 
 When this is done and your command line offers the `kernprof-3` executable, you are ready to go on. 
 
@@ -146,7 +146,7 @@ $ kernprof-3 -l ./serial_numpi_annotated.py 50000000
 [serial version] pi is 3.141728 from 50000000 samples
 Wrote profile results to serial_numpi_annotated.py.lprof
 ~~~
-{: .language-bash }
+{: .language-bash}
 
 You can see that the profiler just adds one line to the output, i.e. the last line. In order to view, the output we can use the `line_profile` module in python:
 
@@ -358,6 +358,8 @@ So this is a prime candidate for acceleration.
 > >     48                                               else:
 > >     49                                                   sys.exit(1)
 > > ~~~~~
+> > {: .output}
+> >
 > > The `word_count` function takes the longest time. Inside it, `re.split` hogs runtime the most.
 > {: .solution}
 {: .challenge}
