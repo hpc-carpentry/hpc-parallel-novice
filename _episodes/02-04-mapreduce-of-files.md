@@ -106,6 +106,7 @@ She tests her python program on a single input file. As she knows how long it'll
 > 3.140714
 > ~~~~~
 > {: .output}
+{: .callout}
 
 That went pretty well. She is reminded of the map-reduce idiom that she encountered yesterday. That was the map-step that filters out the occurrences she was interested in. She now needs a reduce step to combine all of these estimates to a global one. If she has all of this, she is basically done recovering her work of yesterday. The [code she comes up with]({{ page.root }}/code/02_parallel_jobs/average_pi_estimates.py) is based on her previous programs. 
 
