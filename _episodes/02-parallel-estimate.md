@@ -4,23 +4,29 @@ teaching: 30
 exercises: 15
 questions:
 - "What are data parallel algorithms?"
-- "How can I estimate the yield of parallelization without writing one line of code?"
+- "How can I estimate the yield of parallelization without writing one line of
+  code?"
 - "How do I use multiple cores on a computer in my program?"
 objectives:
 - "Use the profiling data to calculate the theoretical speed-up."
 - "Use the theoretical speed-up to decide for an implementation."
 - "Use the multiprocessing module to create a pool of workers."
-- "Let each worker have a task and improve the runtime of the code as the workers can work independent of each other."
-- "Measure the run time of both the parallel version of the implementation and compare it to the serial one."
+- "Let each worker have a task and improve the runtime of the code as the 
+  workers can work independent of each other."
+- "Measure the run time of both the parallel version of the implementation
+  and compare it to the serial one."
 keypoints:
-- "Amdahl's law is a description of what you can expect of your parallelisation efforts."
-- "Use the profiling data to calculate the time consumption of hot spots in the code."
-- "The generation and processing of random numbers can be parallelized as it is a data parallel task."
-- "Time consumption of a single application can be measured using the `time` utility."
-- "The ratio of the run time of a parallel program divided by the time of the equivalent serial implementation, is called speed-up."
+- "Amdahl's law is a description of what you can expect of your parallelisation
+  efforts."
+- "Use the profiling data to calculate the time consumption of hot spots in the
+  code."
+- "The generation and processing of random numbers can be parallelized as it is
+  a data parallel task."
+- "Time consumption of a single application can be measured using the `time`
+  utility."
+- "The ratio of the run time of a parallel program divided by the time of the
+  equivalent serial implementation, is called speed-up."
 ---
-
-
 
 Having the profiling data, our estimate of pi is a valuable resource.
 
@@ -36,33 +42,43 @@ Total time: 2.04205 s
 File: ./serial_numpi_profiled.py
 Function: inside_circle at line 7
 
-Line #      Hits         Time  Per Hit   % Time  Line Contents
-==============================================================
-     7                                           @profile
-     8                                           def inside_circle(total_count):
-     9                                           
-    10         1       749408 749408.0     36.7      x = np.float32(np.random.uniform(size=total_count))
-    11         1       743129 743129.0     36.4      y = np.float32(np.random.uniform(size=total_count))
-    12                                           
-    13         1       261149 261149.0     12.8      radii = np.sqrt(x*x + y*y)
-    14                                           
-    15         1       195070 195070.0      9.6      filtered = np.where(radii<=1.0)
-    16         1        93290  93290.0      4.6      count = len(radii[filtered])
-    17                                           
-    18         1            2      2.0      0.0      return count
+Line #  Hits    Time  Per Hit % Time  Line Contents
+=====================================================
+     7                                @profile
+     8                                def inside_circle(total_count):
+     9
+    10     1  749408 749408.0   36.7      x = np.float32(np.random.uniform(
+                                                         size=total_count))
+    11     1  743129 743129.0   36.4      y = np.float32(np.random.uniform(
+                                                         size=total_count))
+    12
+    13     1  261149 261149.0   12.8      radii = np.sqrt(x*x + y*y)
+    14
+    15     1  195070 195070.0    9.6      filtered = np.where(radii<=1.0)
+    16     1   93290  93290.0    4.6      count = len(radii[filtered])
+    17
+    18     1       2      2.0    0.0      return count
 ~~~~~
 {: .output }
 
-The key points were, that `inside_circle` consumed the majority of the runtime (99%). Even more so, the generation of random numbers consumed the most parts of the runtime (73%). 
+The key points were, that `inside_circle` consumed the majority of the runtime
+(99%). Even more so, the generation of random numbers consumed the most parts
+of the runtime (73%).
 
-More over, the generation of random numbers in x and in y is independent (two separate lines of code). So there is another way to exploit data independence:
+More over, the generation of random numbers in x and in y is independent (two
+separate lines of code). So there is another way to exploit data independence:
 
-![Illustration of drawing random number pairs `x` and `y` and their dependency with respect to the dimension]({{ page.root }}/tikz/data_coords_parallel_estimate_pi.svg)
+![Illustration of drawing random number pairs `x` and `y` and their dependency
+with respect to the dimension]({{ page.root
+}}/tikz/data_coords_parallel_estimate_pi.svg)
 
 
 > ## Numpy madness
 >
-> Numpy is a great library for doing numerical computations in python (this is where its name originates). In terms of readability however, the numpy syntax does somewhat obscure what is happening under the hood. Let's go through an example:
+> Numpy is a great library for doing numerical computations in python (this is
+> where its name originates). In terms of readability however, the numpy syntax
+> does somewhat obscure what is happening under the hood. Let's go through an
+> example:
 >
 > ~~~~~
 > a = np.random.uniform(size=10)
@@ -72,9 +88,11 @@ More over, the generation of random numbers in x and in y is independent (two se
 > ~~~~~
 > {: .language-python }
 > 
-> First of, `np.random.uniform(size=10)` creates a collection of 10 random numbers. Cross check this by printing it to the terminal. 
+> First of, `np.random.uniform(size=10)` creates a collection of 10 random
+> numbers. Cross check this by printing it to the terminal.
 >
-> Second, `c = a + b` refers to the plus operation performed item by item of the participating arrays or lists. It can be rewritten as:
+> Second, `c = a + b` refers to the plus operation performed item by item of
+> the participating arrays or lists. It can be rewritten as:
 >
 > ~~~~~
 > for i in range(len(a)):
@@ -82,15 +100,21 @@ More over, the generation of random numbers in x and in y is independent (two se
 > ~~~~~
 > {: .language-python }
 >
-> In technical terms, numpy is a vectorizing library. It tries to compress for-loop-lie operations into singular statements if each iteration of for-loop-operation is independent of the previous and/or next.
+> In technical terms, numpy is a vectorizing library. It tries to compress
+> for-loop-lie operations into singular statements if each iteration of
+> for-loop-operation is independent of the previous and/or next.
 {: .callout}
 
 
-Another approach is trying to compute as many independent parts as possible in parallel. In Lola's case, we can make the observation that each pair of numbers in `x` and `y` is independent of each other. 
+Another approach is trying to compute as many independent parts as possible in
+parallel. In Lola's case, we can make the observation that each pair of numbers
+in `x` and `y` is independent of each other.
 
-![Illustration of drawing random number pairs `x` and `y` and their dependency with respect to the pair generated]({{ page.root }}/tikz/data_pairs_parallel_estimate_pi.svg)
+![Illustration of drawing random number pairs `x` and `y` and their dependency
+with respect to the pair generated]({{ page.root
+}}/tikz/data_pairs_parallel_estimate_pi.svg)
 
-This behavior is often referred to as **data parallelism**. 
+This behavior is often referred to as **data parallelism**.
 
 > ## Data parallel in Reality
 >
@@ -101,13 +125,17 @@ This behavior is often referred to as **data parallelism**.
 > 3. Rinsing the dishes with one sink
 > 4. A family getting dressed to leave the apartment for a birthday party
 >
-> Think about what the inputs are to the task at hand. Can individual items of the inputs be processed independent of each other?
+> Think about what the inputs are to the task at hand. Can individual items of
+> the inputs be processed independent of each other?
 > 
 > > ## Solution
-> > 1. not parallel typically - as we have to start with one book and only have one reader/writer
+> >
+> > 1. not parallel typically - as we have to start with one book and only have
+> >    one reader/writer
 > > 2. parallel, the more people help, the better
-> > 3. not parallel, every piece of cutlery and dishes needs to go through one sink
-> > 4. parallel, each family member can get dressed independent of each other 
+> > 3. not parallel, every piece of cutlery and dishes needs to go through one
+> >    sink
+> > 4. parallel, each family member can get dressed independent of each other
 > {: .solution}
 {: .challenge}
 
@@ -124,7 +152,10 @@ This behavior is often referred to as **data parallelism**.
 > {: .language-python }
 >
 > > ## Solution
-> > Yes, each iteration at a given value for `i` is independent of any other value. We multiply the value that is currently stored at `my_data[i]` by `pi` and store the result back into `my_data[i]`.
+> >
+> > Yes, each iteration at a given value for `i` is independent of any other
+> > value. We multiply the value that is currently stored at `my_data[i]` by
+> > `pi` and store the result back into `my_data[i]`.
 > > 
 > > The same code in numpy would be:
 > >
@@ -153,7 +184,12 @@ This behavior is often referred to as **data parallelism**.
 > {: .language-python }
 >
 > > ## Solution
-> > Yes, each iteration at a given value for `i` is independent of any other value even though we have an if-statement here. We set every even indexed value in `my_data` to `42`. For any other value in `my_data`, we multiply the value that is currently stored by `3` and store the result back into `my_data[i]`.
+> >
+> > Yes, each iteration at a given value for `i` is independent of any other
+> > value even though we have an if-statement here. We set every even indexed
+> > value in `my_data` to `42`. For any other value in `my_data`, we multiply
+> > the value that is currently stored by `3` and store the result back into
+> > `my_data[i]`.
 > > 
 > > The same code in numpy would be:
 > >
@@ -181,17 +217,35 @@ This behavior is often referred to as **data parallelism**.
 > {: .language-python }
 > 
 > > ## Solution
-> > No, iteration `i` depends on the iteration before it, i.e. on iteration `i-1`. This is hard if not impossible to parallelize.
+> >
+> > No, iteration `i` depends on the iteration before it, i.e. on iteration
+> > `i-1`. This is hard if not impossible to parallelize.
 > {: .solution}
 {: .challenge}
 
-Lola now wonders how to proceed. There are multiple options at her disposal (see the 2 strategies above). But given her limited time budget, she thinks that trying them all out is tedious. She discusses this with her office mate over lunch. Her colleague mentions that a similar type of consideration was first discussed by Gene Amdahl in 1967 and goes by the name of [Amdahl's law](https://en.wikipedia.org/wiki/Amdahl%27s_law). This law provides a simple way of calculating how fast a program can get when parallelized for a fixed problem size. By profiling her code, Lola has all the ingredients to make this calculation. So they both embark on this exercise.
+Lola now wonders how to proceed. There are multiple options at her disposal
+(see the 2 strategies above). But given her limited time budget, she thinks
+that trying them all out is tedious. She discusses this with her office mate
+over lunch. Her colleague mentions that a similar type of consideration was
+first discussed by Gene Amdahl in 1967 and goes by the name of [Amdahl's
+law](https://en.wikipedia.org/wiki/Amdahl%27s_law). This law provides a simple
+way of calculating how fast a program can get when parallelized for a fixed
+problem size. By profiling her code, Lola has all the ingredients to make this
+calculation. So they both embark on this exercise.
 
-The performance improvement of a program, given an original implementation and an improved one is referred to as __speed-up S__. Given a program, we can measure the runtime of the code that can benefit later on from use of more resources (i.e. parallel computations as in our case). We call this quantity __portion `p` to parallelize__ (or short parallel portion). 
+The performance improvement of a program, given an original implementation and
+an improved one is referred to as __speed-up S__. Given a program, we can
+measure the runtime of the code that can benefit later on from use of more
+resources (i.e. parallel computations as in our case). We call this quantity
+__portion `p` to parallelize__ (or short parallel portion).
 
-For this __parallel portion__, we also need to know how much this can be sped-up effectively by the changes we have in mind. We will refer to this quantity as __serial speed-up `s`__ (code in the parallel portion that was once serial will be sped-up). 
+For this __parallel portion__, we also need to know how much this can be
+sped-up effectively by the changes we have in mind. We will refer to this
+quantity as __serial speed-up `s`__ (code in the parallel portion that was once
+serial will be sped-up).
 
-Given all these ingredients, the theoretical speed-up of the whole program is given by:
+Given all these ingredients, the theoretical speed-up of the whole program is
+given by:
 
 ~~~~~
            1
@@ -202,11 +256,17 @@ S = ---------------
 
 > ## Independent Coordinates
 > 
-> Let's take Lola's idea of executing the generation of random numbers per coordinate `x` and `y` from above:
+> Let's take Lola's idea of executing the generation of random numbers per
+> coordinate `x` and `y` from above:
 >
-> ![Illustration of drawing random number pairs `x` and `y` and their dependency with respect to the dimension]({{ page.root }}/tikz/data_coords_parallel_estimate_pi.svg)
+> ![Illustration of drawing random number pairs `x` and `y` and their
+> dependency with respect to the dimension]({{ page.root
+> }}/tikz/data_coords_parallel_estimate_pi.svg)
 >
-> The parallel portion of these two operations amounts to `37+36=73%` of the overall runtime, i.e. `p = 73% = 0.73`. As we want to rewrite the generation of random numbers in x into one independent task and the generation of random numbers in y into another one, the speed-up `s = 2`.
+> The parallel portion of these two operations amounts to `37+36=73%` of the
+> overall runtime, i.e. `p = 73% = 0.73`. As we want to rewrite the generation
+> of random numbers in x into one independent task and the generation of random
+> numbers in y into another one, the speed-up `s = 2`.
 >
 > ~~~~~
 >            1                   1          1
@@ -215,16 +275,20 @@ S = ---------------
 > ~~~~~
 > {: .output }
 > 
-> S for practical matters is at this point just a number. But this can bring us in a position, where we can rate different approaches for their viability to parallelize. 
+> S for practical matters is at this point just a number. But this can bring us
+> in a position, where we can rate different approaches for their viability to
+> parallelize.
 {: .callout}
 
 > ## Chunking the data
 >
-> Take Lola's position and compute the theoretical speed up if she would partition the generation of random numbers in 4 parts. In other words, she would rewrite `inside_circle` as:
+> Take Lola's position and compute the theoretical speed up if she would
+> partition the generation of random numbers in 4 parts. In other words, she
+> would rewrite `inside_circle` as:
 >
 > ~~~~~
 > def inside_circle(total_count):
->    
+>
 >    count_per_chunk = int(total_count/4)
 >    x = np.float32(np.random.uniform(size=count_per_chunk))
 >    y = np.float32(np.random.uniform(size=count_per_chunk))
@@ -237,15 +301,17 @@ S = ---------------
 >
 >    filtered = np.where(radii<=1.0)
 >    count = len(radii[filtered])
->    
+>
 >    return count 
 > ~~~~~
 > {: .language-python }
 > 
-> For the sake of the example, we assume that the line profile looks identical to the original implementation above. Compute the theoretical speed-up S!
-> Which implementation should Lola choose now? 
+> For the sake of the example, we assume that the line profile looks identical
+> to the original implementation above. Compute the theoretical speed-up S!
+> Which implementation should Lola choose now?
 >
 > > ## Solution
+> >
 > > ~~~~~
 > >            1                   1
 > > S = -------------------  =  -------- = 2.21
@@ -257,38 +323,47 @@ S = ---------------
 
 > ## Always go parallel! Right?
 >
-> Profile this [python application]({{ page.root }}/downloads/volume_pylibs.py) which computes how much disk space your python standard library consumes.
+> Profile this [python application]({{ page.root }}/downloads/volume_pylibs.py)
+> which computes how much disk space your python standard library consumes.
 >
 > The algorithm works in 2 steps:
-> 1. create a list of absolute paths of all `.py` files in your python's system folder
-> 2. loop over all paths from 1. and sum up the space on disk each file consumes
+> 1. create a list of absolute paths of all `.py` files in your python's system
+>    folder
+> 2. loop over all paths from 1. and sum up the space on disk each file
+>    consumes
 >
-> Is this a task worth parallelizing? Make a guess!
-> Verify your answer using profiling and computing the theoretical speed-up possible.
+> Is this a task worth parallelizing? Make a guess! Verify your answer using
+> profiling and computing the theoretical speed-up possible.
 {: .challenge}
 
 
 So the bottom line(s) of Amdahl's law are:
 
-- **we can speed up a program if we drive `p` as close as possible towards `1`**   
-(in other words we should try to parallelize at best the entire program )
-- **we can speed up a program if we drive `s` to a large number**  
-(in other words we should find ways to speed-up portions of the code as best as possible)
+- **we can speed up a program if we drive `p` as close as possible towards
+  `1`** (in other words we should try to parallelize at best the entire program )
+- **we can speed up a program if we drive `s` to a large number** (in other
+  words we should find ways to speed-up portions of the code as best as possible)
 - **there is a limit to the speed-up that we can achieve** 
 
-![Comparison of different speed-ups and parallel portions]({{ page.root }}/fig/03/amdahls_law.svg)
+![Comparison of different speed-ups and parallel portions]({{ page.root
+}}/fig/03/amdahls_law.svg)
 
 > ## Surprise! More limits.
 > 
-> Until here `s` was of dubious nature. It was a property of the parallel implementation of our code. In practise, this number is not only limited algorithmically, but also by the hardware your code is running on.
+> Until here `s` was of dubious nature. It was a property of the parallel
+> implementation of our code. In practise, this number is not only limited
+> algorithmically, but also by the hardware your code is running on.
 >
 > Modern computers consist of 3 major parts most of the time:
 > - a core processing unit (CPU)
 > - some non-persistent memory (RAM)
 > - input/output devices
-> (we omit disks, network cards, monitors, keyboards, GPUs, etc for the sake of argument)
 >
-> When a program wants to perform a computation, it typically does the following  
+> (we omit disks, network cards, monitors, keyboards, GPUs, etc for the sake of
+> argument)
+>
+> When a program wants to perform a computation, it typically does the
+> following
 > 
 > 1. read in some data
 > 2. store it in memory (RAM)
@@ -296,15 +371,26 @@ So the bottom line(s) of Amdahl's law are:
 > 4. store the results back to RAM
 > 5. write the data to some output (monitor, disk)
 > 
-> Modern CPUs can do more than one thing at a time. They consist of more than one "device" than can perform a computation at a single point in time. This "device" is called a CPU core. 
-> When we want to perform some tasks in parallel, the amount of work that can be done in parallel is limited by the amount of CPU cores that can perform computations autonomously. Thus, the number of CPU cores is typically the hard limit for parallelizing any computation heavy program. 
+> Modern CPUs can do more than one thing at a time. They consist of more than
+> one "device" than can perform a computation at a single point in time. This
+> "device" is called a CPU core. When we want to perform some tasks in
+> parallel, the amount of work that can be done in parallel is limited by the
+> amount of CPU cores that can perform computations autonomously. Thus, the
+> number of CPU cores is typically the hard limit for parallelizing any
+> computation heavy program.
 {: .callout}
 
-Keeping this in mind, Lola decides to split up the work for multiple cores. This requires Lola to split up the number of total samples by the number of cores available and calling `count_inside` on each of these partitions (or chunks):
+Keeping this in mind, Lola decides to split up the work for multiple cores.
+This requires Lola to split up the number of total samples by the number of
+cores available and calling `count_inside` on each of these partitions (or
+chunks):
 
-![Partitioning `x` and `y`]({{ page.root }}/tikz/partition_data_parallel_estimate_pi.svg)
+![Partitioning `x` and `y`]({{ page.root
+}}/tikz/partition_data_parallel_estimate_pi.svg)
 
-The number of partitions has to be limited by the number of CPU cores available. With this in mind, the `estimate_pi` method can be converted to run in parallel:
+The number of partitions has to be limited by the number of CPU cores
+available. With this in mind, the `estimate_pi` method can be converted to run
+in parallel:
 
 ~~~
 from multiprocessing import Pool
@@ -324,11 +410,31 @@ def estimate_pi(n_samples,n_cores):
 ~~~
 {: .language-python}
 
-We are using the `multiprocessing` module that comes with the python standard library. The first step is to create a list of numbers that contain the partitions. For this, `n_samples` is divided by the number of cores available on the machine, where this code is executed. The ratio has to be converted to an integer to ensure, that each partition is compatible to a length of an array. The construct used next is a process `Pool`. Due to technical details on how the python interpreter is built, we do not use a Pool of threads here. In other languages than python, `threads` are the more common idiom to represent independent strings of execution that share the same memory than the process they are created in. The process `Pool` creates `n_cores` processes and keeps them active as long as the `Pool` is active. Then `pool.map` will call `inside_circle` using an item of `partitions` as the argument. In other words, for each item in `partitions`, the `inside_circle` function is called once using the respective item as input argument. The result of these invocations of `inside_circle` are stored within the `counts` variable (which will have the same length as `partitions` eventually).
+We are using the `multiprocessing` module that comes with the python standard
+library. The first step is to create a list of numbers that contain the
+partitions. For this, `n_samples` is divided by the number of cores available
+on the machine, where this code is executed. The ratio has to be converted to
+an integer to ensure, that each partition is compatible to a length of an
+array. The construct used next is a process `Pool`. Due to technical details on
+how the python interpreter is built, we do not use a Pool of threads here. In
+other languages than python, `threads` are the more common idiom to represent
+independent strings of execution that share the same memory than the process
+they are created in. The process `Pool` creates `n_cores` processes and keeps
+them active as long as the `Pool` is active. Then `pool.map` will call
+`inside_circle` using an item of `partitions` as the argument. In other words,
+for each item in `partitions`, the `inside_circle` function is called once
+using the respective item as input argument. The result of these invocations of
+`inside_circle` are stored within the `counts` variable (which will have the
+same length as `partitions` eventually).
 
-![Partitioning `x` and `y` and results of reach partition]({{ page.root }}/tikz/partition_data_parallel_estimate_pi_with_results.svg)
+![Partitioning `x` and `y` and results of reach partition]({{ page.root
+}}/tikz/partition_data_parallel_estimate_pi_with_results.svg)
 
-The last step required before calculating pi is to collect the individual results from the `partitions` and _reduce_ it to one `total_count` of those random number pairs that were inside of the circle. Here the `sum` function loops over `partitions` and does exactly that. So let's run our [parallel implementation](code/02_parallel_jobs/parallel_numpi.py) and see what it gives:
+The last step required before calculating pi is to collect the individual
+results from the `partitions` and _reduce_ it to one `total_count` of those
+random number pairs that were inside of the circle. Here the `sum` function
+loops over `partitions` and does exactly that. So let's run our [parallel
+implementation](code/02_parallel_jobs/parallel_numpi.py) and see what it gives:
 
 ~~~
 $ python3 ./parallel_numpi.py 1000000000
@@ -341,7 +447,10 @@ $ python3 ./parallel_numpi.py 1000000000
 ~~~
 {: .output}
 
-The good news is, the parallel implementation is correct. It estimates Pi to equally bad precision than our serial implementation. The question remains, did we gain anything? For this, Lola tries to the `time` system utility that can be found on all *nix installations and most certainly on compute clusters.
+The good news is, the parallel implementation is correct. It estimates Pi to
+equally bad precision than our serial implementation. The question remains, did
+we gain anything? For this, Lola tries to the `time` system utility that can be
+found on all *nix installations and most certainly on compute clusters.
 
 ~~~
 $ time python3 ./serial_numpi.py 200000000
@@ -373,20 +482,45 @@ sys		0m2.813s
 ~~~
 {: .output}
 
-If the snippet from above is compared to the snippets earlier, you can see that `time` has been put before any other command executed at the prompt and 3 lines have been added to the output of our program. `time` reports 3 times and they are all different:
+If the snippet from above is compared to the snippets earlier, you can see that
+`time` has been put before any other command executed at the prompt and 3 lines
+have been added to the output of our program. `time` reports 3 times and they
+are all different:
 
-  - `real` that denotes the time that has passed during our program as if you would have used a stop watch
-  - `user` this is accumulated amount of CPU seconds (so seconds that the CPU was active) spent in code by the user (you)
-  - `sys`  this is accumulated amount of CPU seconds that the CPU spent while executing system code that was necessary to run your program (memory management, display drivers if needed, interactions with the disk, etc.)
-    
-So from the above, Lola wants to compare the `real` time spent by her serial implementation (`0m12.766`) and compare it to the `real` time spent by her parallel implementation (`0m1.942s`). Apparently, her parallel program was `6.6` times faster than the serial implementation. 
+- `real` that denotes the time that has passed during our program as if you
+  would have used a stop watch
+- `user` this is accumulated amount of CPU seconds (so seconds that the CPU
+  was active) spent in code by the user (you)
+- `sys` this is accumulated amount of CPU seconds that the CPU spent while
+  executing system code that was necessary to run your program (memory
+  management, display drivers if needed, interactions with the disk, etc.)
 
-We can compare this to the maximum speed-up that is achievable: `S = 1/(1 - 0.99 + 0.99/12) = 10.8`
-That means, our parallel implementation does already a good job, but only achieves `100*6.6/10.8 = 61.1%` runtime improvement of what is possible. As achieving maximum speed-up is hardly ever possible, Lola leaves that as a good end of the day and leaves for home.
+So from the above, Lola wants to compare the `real` time spent by her serial
+implementation (`0m12.766`) and compare it to the `real` time spent by her
+parallel implementation (`0m1.942s`). Apparently, her parallel program was
+`6.6` times faster than the serial implementation.
+
+We can compare this to the maximum speed-up that is achievable: `S = 1/(1 -
+0.99 + 0.99/12) = 10.8` That means, our parallel implementation does already a
+good job, but only achieves `100*6.6/10.8 = 61.1%` runtime improvement of what
+is possible. As achieving maximum speed-up is hardly ever possible, Lola leaves
+that as a good end of the day and leaves for home.
 
 > ## Adding up times
-> The output of the `time` command is very much bound to how a operating system works. In an ideal world, `user` and `sys` of serial programs should add up to `real`. Typically they never do. The reason is, that the operating systems used in HPC and on laptops or workstations are set up in a way, that the operating system decides which process receives time on the CPU (aka to perform computations). Once a process runs, it may however happen, that the system decides to intervene and have some other binary have a tiny slice of a CPU second while your application is executed. This is where the mismatch for `user+sys` and `real` comes from.
-> Note also how the `user` time of the parallel program is a lot larger than the time that was actually consumed. This is because, `time` reports accumulated timings i.e. it adds up CPU seconds that were consumed in parallel.
+>
+> The output of the `time` command is very much bound to how a operating system
+> works. In an ideal world, `user` and `sys` of serial programs should add up
+> to `real`. Typically they never do. The reason is, that the operating systems
+> used in HPC and on laptops or workstations are set up in a way, that the
+> operating system decides which process receives time on the CPU (aka to
+> perform computations). Once a process runs, it may however happen, that the
+> system decides to intervene and have some other binary have a tiny slice of a
+> CPU second while your application is executed. This is where the mismatch for
+> `user+sys` and `real` comes from.
+> Note also how the `user` time of the parallel program is a lot larger than
+> the time that was actually consumed. This is because, `time` reports
+> accumulated timings i.e. it adds up CPU seconds that were consumed in
+> parallel.
 {: .callout}
 
 
@@ -395,11 +529,13 @@ That means, our parallel implementation does already a good job, but only achiev
 > What of the following is a task, that can be parallelized in real life:
 > 
 > 1. Compressing the files in a directory
-> 2. Converting the currency in all rows of a large spreadsheet (10 million rows)
+> 2. Converting the currency in all rows of a large spreadsheet (10 million
+>    rows)
 > 3. Writing an e-mail in an online editor
 > 4. Watching a video on YouTube/vimeo/etc. or in a video player application
 >
 > > ## Solution
+> >
 > > 1. parallel, each file can be compressed separately
 > > 2. parallel, each row can be converted separately
 > > 3. not parallel, we only have one writer (you)
@@ -409,7 +545,8 @@ That means, our parallel implementation does already a good job, but only achiev
 
 > ## Line count again
 >
-> Download [this python script]({{ page.root }}/downloads/count_lines.py) to your current directory. Run it by executing:
+> Download [this python script]({{ page.root }}/downloads/count_lines.py) to
+> your current directory. Run it by executing:
 > 
 > ~~~~~
 > $ python3 count_lines.py *py
@@ -429,12 +566,14 @@ That means, our parallel implementation does already a good job, but only achiev
 > ~~~~~
 > {: .output}
 > 
-> Examine the application if you can find data parallelism. If so parallelize it! Compare the timings!
+> Examine the application if you can find data parallelism. If so parallelize
+> it! Compare the timings!
 {: .challenge}
 
 > ## Parallel word count
 >
-> Download [this python script]({{ page.root }}/downloads/count_pylibs.py) to your current directory. Run it by executing:
+> Download [this python script]({{ page.root }}/downloads/count_pylibs.py) to
+> your current directory. Run it by executing:
 > 
 > ~~~~~
 > $ python3 count_pylibs.py
@@ -442,7 +581,8 @@ That means, our parallel implementation does already a good job, but only achiev
 > ~~~~~
 > {: .language-bash}
 > 
-> Examine the application if you can find data parallelism. If so parallelize it! Compare the timings!
+> Examine the application if you can find data parallelism. If so parallelize
+> it! Compare the timings!
 {: .challenge}
 
 
