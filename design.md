@@ -34,9 +34,9 @@ subtitle: Lesson Design
 
 ### Goals
 
-1. Get learners to the stage described in the "Software" section of ["Good
-   Enough Practices in Scientific
-   Computing"](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1005510).
+1. Get learners to the stage described in the "Software" section of 
+   ["Good Enough Practices in Scientific Computing"](
+   https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1005510).
    * Goals
      1. Make it easy for people (including your future self) to understand and
         (re)use your code

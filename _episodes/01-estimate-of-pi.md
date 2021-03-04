@@ -208,23 +208,23 @@ Total time: 2.07893 s
 File: ./serial_numpi_profiled.py
 Function: main at line 24
 
-Line #  Hits     Time  Per Hit  % Time  Line Contents
+Line # Hits     Time  Per Hit  % Time  Line Contents
 =====================================================
-    24                                  @profile
-    25                                  def main():
-    26     1        2      2.0     0.0      n_samples = 10000
-    27     1        1      1.0     0.0      if len(sys.argv) > 1:
-    28     1        3      3.0     0.0          n_samples = int(sys.argv[1])
+    24                                 @profile
+    25                                 def main():
+    26    1        2      2.0     0.0    n_samples = 10000
+    27    1        1      1.0     0.0    if len(sys.argv) > 1:
+    28    1        3      3.0     0.0        n_samples = int(sys.argv[1])
     29
-    30     1  2078840 2078840.0  100.0      my_pi = estimate_pi(n_samples)
-    31     1       11     11.0     0.0      sizeof = np.dtype(np.float32).itemsize
-    32
-    33     1       50     50.0     0.0      print("[serial version] required
-                                                  memory %.3f MB" % (n_samples*
-                                                  sizeof*3/(1024*1024)))
-    34     1       23     23.0     0.0      print("[serial version] pi is %f
-                                                  from %i samples" % (my_pi,
-                                                  n_samples)
+    30    1  2078840 2078840.0  100.0    my_pi = estimate_pi(n_samples)
+    31    1       11     11.0     0.0    sizeof = np.dtype(np.float32).itemsize
+
+    32    33    1       50     50.0     0.0    print("[serial version] required
+                                               memory %.3f MB" % (n_samples*
+                                               sizeof*3/(1024*1024)))
+    34    1       23     23.0     0.0    print("[serial version] pi is %f
+                                               from %i samples" % (my_pi,
+                                               n_samples)
 ~~~
 {: .output }
 

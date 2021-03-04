@@ -123,7 +123,7 @@ distributed.scheduler - INFO - -----------------------------------------------
 distributed.scheduler - INFO - Clear task state
 distributed.scheduler - INFO -   Scheduler at: tcp://192.168.178.25:8786
 distributed.scheduler - INFO -       bokeh at:                     :8787
-distributed.scheduler - INFO - Local Directory: /tmp/user/1000/scheduler-k05cez5y
+distributed.scheduler - INFO - Local Directory: /tmp/user/1000/scheduler-k05cez
 distributed.scheduler - INFO - -----------------------------------------------
 ~~~
 {: .output}

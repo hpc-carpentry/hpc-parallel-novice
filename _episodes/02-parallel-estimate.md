@@ -340,13 +340,15 @@ S = ---------------
 So the bottom line(s) of Amdahl's law are:
 
 - **we can speed up a program if we drive `p` as close as possible towards
-  `1`** (in other words we should try to parallelize at best the entire program )
+  `1`** (in other words we should try to parallelize at best the entire
+  program)
 - **we can speed up a program if we drive `s` to a large number** (in other
-  words we should find ways to speed-up portions of the code as best as possible)
+  words we should find ways to speed-up portions of the code as best as
+  possible)
 - **there is a limit to the speed-up that we can achieve** 
 
-![Comparison of different speed-ups and parallel portions]({{ page.root
-}}/fig/03/amdahls_law.svg)
+![Comparison of different speed-ups and parallel portions](
+{{ page.root }}/fig/03/amdahls_law.svg)
 
 > ## Surprise! More limits.
 > 

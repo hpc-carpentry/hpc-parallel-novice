@@ -200,7 +200,7 @@ final result. As the produced files are only kilo-bytes in size, this can be
 done without the scheduler.
 
 ~~~
-$ python3 average_pi_estimates.py map_step.1.log map_step.2.log map_step.3.log map_step.4.log 
+$ python3 average_pi_estimates.py map_step.1.log map_step.2.log map_step.3...
 ~~~
 {: .language-bash}
 

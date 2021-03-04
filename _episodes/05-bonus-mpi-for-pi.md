@@ -34,8 +34,8 @@ to get a feeling about the philosophy behind this approach.
 
 > ## Message Passing Interface
 >
-> A long time before we had smart phones, tablets or laptops, [compute
-> clusters](http://www.phy.duke.edu/~rgb/brahma/Resources/beowulf/papers/ICPP95/icpp95.html)
+> A long time before we had smart phones or tablets, [compute clusters](
+> http://www.phy.duke.edu/~rgb/brahma/Resources/beowulf/papers/ICPP95/icpp95.html)
 > were already around and consisted of interconnected computers that had merely
 > enough memory to show the first two frames of a movie (`2*1920*1080*4 Bytes =
 > 16 MB`).
@@ -84,7 +84,8 @@ larger than the number of CPU cores each of here nodes has, this might change
 and the distributed nature of `mpirun` will reveal itself.
 
 ~~~
-{% include /snippets/02/submit_16_mpirun_hostname.{{site.workshop_scheduler}} %}
+{% include 
+   /snippets/02/submit_16_mpirun_hostname.{{ site.workshop_scheduler }} %}
 ~~~
 {: .language-bash}
 
@@ -138,7 +139,8 @@ invocation), the total number of MPI ranks available and the hostname this rank
 is currently run on.
 
 ~~~
-{% include /snippets/02/submit_16_mpirun_python3_print_hostname.{{ site.workshop_scheduler }} %}
+{% include /snippets/02/submit_16_mpirun_python3_print_hostname.{{ 
+   site.workshop_scheduler }} %}
 ~~~
 {: .language-bash}
 
@@ -301,7 +303,8 @@ And that's it. The complete script the looks like this:
 Now, Lola can submit her first MPI job.
 
 ~~~
-{% include /snippets/02/submit_48_mpirun_python3_mpi_numpi.{{ site.workshop_scheduler }} %}
+{% include /snippets/02/submit_48_mpirun_python3_mpi_numpi.{{
+   site.workshop_scheduler }} %}
 ~~~
 {: .language-bash}
 
