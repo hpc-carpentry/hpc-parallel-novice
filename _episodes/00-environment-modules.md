@@ -131,7 +131,7 @@ $ echo ${PATH}
 which may yield something along the lines of:
 
 ~~~
-/usr/lib64/ccache:/usr/local/bin:/usr/bin:/bin:/home/lola/bin:/usr/local/sbin:/usr/sbin
+/usr/lib64/ccache:/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin
 ~~~
 {: .output}
 
@@ -211,11 +211,11 @@ Harry Potter V are put up).
 > 
 > > ## Solution
 > >
-> > `fdate.zip` can be downloaded from [here]({{ page.root
-> > }}/code/02_parallel_jobs/fdate.zip). Lola adds the path where `fdate`
-> > resides to `PATH`. By accident, she then copies fdate to a file named `ls`.
-> > As she preprended `$PWD` to `PATH`, this version of `ls` has precedence over
-> > `/usr/bin/ls` (the actual list command).
+> > `fdate.zip` can be downloaded from [here](
+> > {{ page.root }}/code/02_parallel_jobs/fdate.zip). Lola adds the path where
+> > `fdate` resides to `PATH`. By accident, she then copies fdate to a file
+> > named `ls`. As she preprended `$PWD` to `PATH`, this version of `ls` has
+> > precedence over `/usr/bin/ls` (the actual list command).
 > {: .solution}
 {: .challenge}
 

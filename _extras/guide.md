@@ -56,9 +56,9 @@ This introduces concepts from high throughput computing by illustrating
 map-reduce style searches through files.
 
 
-Use the file
-[generate_scrambled_data.py](./code/03_parallel_jobs/generate_scrambled_data.py)
-to produce 16 files that comply to the files used in this section, e.g.:
+Use the file [generate_scrambled_data.py](
+./code/03_parallel_jobs/generate_scrambled_data.py) to produce 16 files that
+comply to the files used in this section, e.g.:
 
 ```
 pi_estimate_01.data  pi_estimate_07.data  pi_estimate_13.data

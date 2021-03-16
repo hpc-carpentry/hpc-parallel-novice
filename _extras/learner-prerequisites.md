@@ -182,8 +182,8 @@ do you choose most likely?
 
 #### Jobs, Jobs, Jobs
 
-A compute task on your laptop takes more than 2 hours to complete &mdash; you kill
-the task and reconsider your approach. You feed 50 input files to a single
+A compute task on your laptop takes more than 2 hours to complete &mdash; you
+kill the task and reconsider your approach. You feed 50 input files to a single
 application that needs to run once for every input file. You conclude that this
 is a good task for your cluster. You sit down and submit several jobs to the
 cluster. Each job is limited to 10 minutes of the walltime. Each job defines an
