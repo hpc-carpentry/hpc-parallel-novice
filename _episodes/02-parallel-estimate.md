@@ -260,8 +260,8 @@ S = ---------------
 > coordinate `x` and `y` from above:
 >
 > ![Illustration of drawing random number pairs `x` and `y` and their
-> dependency with respect to the dimension]({{ page.root
-> }}/tikz/data_coords_parallel_estimate_pi.svg)
+> dependency with respect to the dimension](
+> {{ page.root }}/tikz/data_coords_parallel_estimate_pi.svg)
 >
 > The parallel portion of these two operations amounts to `37+36=73%` of the
 > overall runtime, i.e. `p = 73% = 0.73`. As we want to rewrite the generation
