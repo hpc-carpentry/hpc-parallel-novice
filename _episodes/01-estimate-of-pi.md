@@ -51,7 +51,9 @@ Using `total_count` random number pairs in a nutshell is given in the program
 below:
 
 ~~~
-import numpy
+import numpy as np
+import sys
+import argparse
 
 np.random.seed(2017)
 
@@ -72,8 +74,31 @@ def estimate_pi(total_count):
     count = inside_circle(total_count)
     return (4.0 * count / total_count) 
 
+def main():
+
+    parser = argparse.ArgumentParser(
+                         description='Estimate Pi using a Monte Carlo method.')
+    parser.add_argument('n_samples', metavar='N', type=int, nargs=1,
+                        default=10000,
+                        help='number of times to draw a random number')
+
+    args = parser.parse_args()
+
+    n_samples = args.n_samples[0]
+    my_pi = estimate_pi(n_samples)
+    sizeof = np.dtype(np.float64).itemsize
+
+    print("[serial version] required memory %.3f MB" % 
+          (n_samples * sizeof * 3 / (1024**2)))
+    print("[serial version] pi is %f from %i samples" % (my_pi, n_samples))
+
+    sys.exit(0)
+
+if __name__=='__main__':
+    main()
 ~~~
-{: .language-python}
+{: .language-python }
+
 
 For generating pseudo-random numbers, we sample the [uniform probability
 distribution](https://en.wikipedia.org/wiki/Uniform_distribution_(continuous))
@@ -111,7 +136,7 @@ laptop has to offer.
 Before venturing out and trying to accelerate a program, it is utterly
 important to find the hot spots of it by means of measurements. For the sake of
 this tutorial, we use the
-[line_profiler](https://github.com/rkern/line_profiler) of python. Your
+[line_profiler](https://github.com/pyutils/line_profiler) of python. Your
 language of choice most likely has similar utilities.
 
 If need be, to install the profiler, please issue the following command:
@@ -120,7 +145,7 @@ $ pip3 install line_profiler
 ~~~
 {: .language-bash}
 
-When this is done and your command line offers the `kernprof-3` executable, you
+When this is done and your command line offers the `kernprof` executable, you
 are ready to go on.
 
 > ## Profilers
@@ -131,7 +156,7 @@ are ready to go on.
 > results can be hard or easy to interpret. In the following we will only list
 > open and free tools:
 >
-> - python: [line_profiler](https://github.com/rkern/line_profiler),
+> - python: [line_profiler](https://github.com/pyutils/line_profiler),
 >   [prof](https://docs.python.org/3.6/library/profile.html)
 > - java script: [firebug](https://github.com/firebug/firebug)
 > - ruby: [ruby-prof](https://github.com/ruby-prof/ruby-prof)
@@ -142,39 +167,7 @@ are ready to go on.
 
 Next, you have to annotate your code in order to indicate to the profiler what
 you want to profile. For this, we add the `@profile` annotation to a function
-definition of our choice. If we don't do this, the profiler will do nothing. So
-let's refactor our code a little bit:
-
-~~~
-def main():
-
-    parser = argparse.ArgumentParser(
-                         description='Estimate Pi using a Monte Carlo method.')
-    parser.add_argument('n_samples', metavar='N', type=int, nargs=1,
-                        default=10000,
-                        help='number of times to draw a random number')
-
-    args = parser.parse_args()
-
-    n_samples = args.n_samples[0]
-    my_pi = estimate_pi(n_samples)
-    sizeof = np.dtype(np.float64).itemsize
-
-    print("[serial version] required memory %.3f MB" % 
-          (n_samples * sizeof * 3 / (1024**2)))
-    print("[serial version] pi is %f from %i samples" % (my_pi, n_samples))
-
-    sys.exit(0)
-
-
-if __name__=='__main__':
-    main()
-~~~
-{: .language-python }
-
-With this trick, we can make sure that we profile the entire application. Note,
-that this is a necessity when using `line_profiler`. We can now carry on, and
-annotate the main function.
+definition of our choice. We annotate the main function.
 
 ~~~
 ...
@@ -189,7 +182,7 @@ profiler is run with a reduced input parameter that does take only about 2-3
 seconds:
 
 ~~~
-$ kernprof-3 -l ./serial_numpi_annotated.py 50000000
+$ kernprof -l ./serial_numpi_annotated.py 50000000
 [serial version] required memory 572.205 MB
 [serial version] pi is 3.141728 from 50000000 samples
 Wrote profile results to serial_numpi_annotated.py.lprof
