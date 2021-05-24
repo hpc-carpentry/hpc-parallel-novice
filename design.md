@@ -20,7 +20,8 @@ subtitle: Lesson Design
   * Learners use native installs on their own machines (ssh session)
     * May use logins to local cluster
   * Dependence on other Carpentry modules
-    * In particular, [shell-novice](https://github.com/swcarpentry/shell-novice)
+    * In particular, 
+      [shell-novice](https://github.com/swcarpentry/shell-novice)
 * Exercises will mostly *not* be "write this code from scratch"
   * Want lots of short exercises that can reliably be finished in allotted time
   * So use MCQs, fill-in-the-blanks, Parsons Problems, "tweak this code", etc.
