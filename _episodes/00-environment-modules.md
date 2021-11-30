@@ -67,8 +67,9 @@ support staff drops by her office and explains the situation.
 {: .callout }
 
 The support staff, named Lena, demonstrates to Lola how she can deal with the
-situation. First off, she drops a [zip file with a small application]({{
-page.root }}/code/02_parallel_jobs/fdate.zip) into Lola's home directory which
+situation. First off, she drops a 
+[zip file with a small application](https://github.com/hpc-carpentry/hpc-parallel-novice/raw/gh-pages/downloads/filesystem.zip) 
+into Lola's home directory which
 Lola unpacks by calling `unzip fdate.zip`. This produces a small application
 named `fdate` in the current directory.
 
