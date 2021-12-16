@@ -110,7 +110,7 @@ numbers in the `radii` array and obtain its length, which is the number Lola
 are after.
 
 Lola finishes writing the pi estimation and comes up with a [small python
-script]({{ page.root }}/code/02_parallel_jobs/serial_numpi.py), that she can
+script]({{ page.root }}/downloads/serial_numpi.py), that she can
 launch from the command line:
 
 ~~~
