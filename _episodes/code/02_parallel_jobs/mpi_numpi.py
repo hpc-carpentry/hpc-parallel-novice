@@ -3,15 +3,12 @@ import sys
 from mpi4py import MPI
 import numpy as np
 
-np.random.seed(2017)
-
 comm = MPI.COMM_WORLD
 size = comm.Get_size()
 rank = comm.Get_rank()
 
-
 def inside_circle(total_count):
-
+    np.random.seed(2022*rank)
     hname = MPI.Get_processor_name()
 
     x = np.float32(np.random.uniform(size=total_count))
